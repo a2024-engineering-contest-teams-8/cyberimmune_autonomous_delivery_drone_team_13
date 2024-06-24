@@ -1,4 +1,3 @@
-version: '3.4'
 
 services:
 #################################################
@@ -54,7 +53,7 @@ services:
     user: user
     depends_on:
       - arducopter
-    restart: no
+    restart: "no"
     networks:
       cyberimmune:
         ipv4_address: 172.28.0.3
