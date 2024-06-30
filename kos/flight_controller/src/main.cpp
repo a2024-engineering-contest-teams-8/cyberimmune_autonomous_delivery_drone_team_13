@@ -17,6 +17,9 @@
 #define RETRY_REQUEST_DELAY_SEC 5
 #define FLY_ACCEPT_PERIOD_US 500000
 
+extern MissionCommand *commands;
+extern uint32_t commandNum;
+
 int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t delay) {
     char message[512] = {0};
     char signature[257] = {0};
@@ -41,6 +44,10 @@ int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t 
     }
 
     return 1;
+}
+
+double degreeToRadian(double degree){
+    return degree * M_PI / 180;
 }
 
 int main(void) {
@@ -126,16 +133,97 @@ int main(void) {
     //The flight is need to be controlled from now on
     //Also we need to check on ORVD, whether the flight is still allowed or it is need to be paused
 
-    while (true){
-        fprintf(stderr, ">>>>>>>>>>>>>>>>>>>>>>>\n");
-        int32_t latitude;
-        int32_t longitude;
-        int32_t altitude;
-        getCoords(latitude,longitude,altitude);
-        fprintf(stderr, "latitude: %d\n", latitude);
-        fprintf(stderr, "longitude: %d\n", longitude);
-        fprintf(stderr, "altitude: %d\n", altitude);
-        sleep(10);
+   while (true){
+
+        //  Speed control   
+         
+        const double radius_of_earth = 6372795;    
+
+        int32_t lat1,lat2,lon1,lon2,alt1,alt2;
+
+        double cl1,cl2,sl1,sl2,delta,cdelta,sdelta,current_speed,lat1_double,lon1_double,lat2_double,lon2_double,y,x,ad;
+        
+        getCoords(lat1,lon1,alt1);
+        
+        lat1_double = (double)lat1 / 10000000;
+        lon1_double = (double)lon1 / 10000000;
+
+        fprintf(stderr,">>>>>>>>>>>>>>>>\n");
+        fprintf(stderr,"Lat1 %f \n",lat1_double);
+        fprintf(stderr,"Lon1 %f \n",lon1_double);
+
+        sleep(3);
+        
+        getCoords(lat2,lon2,alt2);
+        
+        lat2_double = (double)lat2 / 10000000;
+        lon2_double = (double)lon2 / 10000000;
+
+        fprintf(stderr,">>>>>>>>>>>>>>>>\n");
+        fprintf(stderr,"Lat2 %f \n",lat2_double);
+        fprintf(stderr,"Lon2 %f \n",lon2_double);
+
+        lat1_double = degreeToRadian(lat1_double);
+        lat2_double = degreeToRadian(lat2_double);
+        lon1_double = degreeToRadian(lon1_double);
+        lon2_double = degreeToRadian(lon2_double);
+
+        cl1 = cos(lat1_double);
+        cl2 = cos(lat2_double);
+        sl1 = sin(lon1_double);
+        sl2 = sin(lon2_double);
+
+        delta = abs(lat2_double - lat1_double);
+        cdelta = cos(delta);
+        sdelta = sin(delta);
+
+        y = sqrt(pow(cl2*sdelta,2)+pow(cl1*sl2-sl1*cl2*cdelta,2));
+        x = sl1*sl2+cl1*cl2*cdelta;
+
+        ad = atan2(y,x);
+
+        current_speed = radius_of_earth * ad;
+
+        fprintf(stderr,">>>>>>>>>>>>>>>>\n");
+        fprintf(stderr,"current_speed %f\n",current_speed);
+
+        if(current_speed > 5){
+            changeSpeed(3);
+        }
+
+        // Latitide control
+        
+        int32_t alt_assigned,alt_abs;
+        bool requestMissionHasAlready = false;
+
+        if (requestMissionHasAlready == false){
+            for (int i = 0; i < commandNum; i++) {
+                switch (commands[i].type) {
+                    case CommandType::TAKEOFF:
+                        alt_assigned = commands[i].content.takeoff.altitude;
+                        requestMissionHasAlready = true;
+                        break;
+                    case CommandType::HOME:
+                        alt_abs = commands[i].content.waypoint.altitude;
+                        break;
+                }
+            }
+        }
+        
+        alt1 = alt1 - alt_abs - 10;
+
+        fprintf(stderr,"alt_assigned %d\n",alt_assigned);
+        fprintf(stderr,"Alt_abs %d\n",alt_abs);
+        fprintf(stderr,"Altitude %d\n",alt1);
+
+        if(alt1 > alt_assigned ){
+            changeAltitude(alt_assigned);
+        }
+
+        // Cargo control
+
+        setCargoLock(0);
+    
     }
 
     return EXIT_SUCCESS;
