@@ -63,7 +63,7 @@ shell-kos:
 	docker run --name kos -w /home/user/kos --user user --net simulator --ip 172.28.0.1 -it --rm simulator /bin/bash -i
 
 shell-kos-real:
-	docker run --volume="`pwd`:/home/user/" --name kos -w /home/user/kos --user user --net simulator --ip 172.28.0.1 -it --rm simulator /bin/bash -i
+	docker run --volume="`pwd`:/home/user/" --name kos -w /home/user/kos --user user -it --rm simulator /bin/bash -i
 
 shell-arducopter:
 	docker run --name arducopter -w /home/user/ardupilot --user user --net simulator --ip 172.28.0.2 -it --rm simulator /bin/bash -i
