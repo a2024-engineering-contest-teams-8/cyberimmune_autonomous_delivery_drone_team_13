@@ -4,6 +4,9 @@ docker: docker-image
 
 docker-image: docker-image-simulator docker-image-orvd
 
+docker-image-simulator_base:
+	docker build -f Dockerfile_base -t simulator_base ./
+
 docker-image-simulator:
 	docker build ./ -t simulator
 
