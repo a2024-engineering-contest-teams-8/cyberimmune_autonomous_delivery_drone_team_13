@@ -50,5 +50,9 @@ struct MissionCommand {
     CommandContent content;
 };
 
+extern uint32_t commandNum;
+extern MissionCommand *commands;
+extern int hasMission;
+
 int parseMission(char* response);
 void printMission();
