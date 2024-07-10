@@ -61,3 +61,5 @@ terrain
 
 KasperskyOS-Community-Edition-1.2.0.45/
 build_real_offline/
+build_real_online/
+.bash_history
