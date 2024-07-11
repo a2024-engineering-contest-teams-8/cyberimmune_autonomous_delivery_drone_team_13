@@ -1,8 +1,11 @@
 #include <stdio.h>
 #include "math.h"
 #include "time.h"
+#include "unistd.h"
 
 #include "../../shared/include/ipc_messages_navigation_system.h"
+#include "../../shared/include/ipc_messages_credential_manager.h"
+#include "../../shared/include/ipc_messages_server_connector.h"
 
 #include "../include/flight_utils.h"
 
@@ -18,6 +21,33 @@ const double HORIZONTAL_THRESHOLD = 3.0;
 double homeLatitude = 0.0;
 double homeLongitude = 0.0;
 double homeAltitude = 0.0;
+CommandWaypoint oldWaypoint = { 0, 0, 0 };
+
+int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t delay) {
+    char message[512] = {0};
+    char signature[257] = {0};
+    char request[1024] = {0};
+    snprintf(message, 512, "%s?%s", method, BOARD_ID);
+
+    while (!signMessage(message, signature)) {
+        fprintf(stderr, "[%s] Warning: Failed to sign %s message at Credential Manager. Trying again in %ds\n", ENTITY_NAME, errorMessage, delay);
+        sleep(delay);
+    }
+    snprintf(request, 1024, "%s&sig=0x%s", message, signature);
+
+    while (!sendRequest(request, response)) {
+        fprintf(stderr, "[%s] Warning: Failed to send %s request through Server Connector. Trying again in %ds\n", ENTITY_NAME, errorMessage, delay);
+        sleep(delay);
+    }
+
+    uint8_t authenticity = 0;
+    while (!checkSignature(response, authenticity) || !authenticity) {
+        fprintf(stderr, "[%s] Warning: Failed to check signature of %s response received through Server Connector. Trying again in %ds\n", ENTITY_NAME, errorMessage, delay);
+        sleep(delay);
+    }
+
+    return 1;
+}
 
 double getSystemTime() {
     auto t = clock();
@@ -161,6 +191,7 @@ uint32_t getNextCommandIndex() {
                 );
                 double h = abs(currAlt - homeAltitude - (double)waypoint.altitude / 100.0);
                 if (d < HORIZONTAL_THRESHOLD && h < VERTICAL_THRESHOLD) {
+                    oldWaypoint = waypoint;
                     ++nextIndex;
                 }
                 break;
@@ -182,4 +213,8 @@ uint32_t getNextCommandIndex() {
 
 MissionCommand* getNextCommand() {
     return commands + getNextCommandIndex();
+}
+
+CommandWaypoint getOldWaypoint() {
+    return oldWaypoint;
 }

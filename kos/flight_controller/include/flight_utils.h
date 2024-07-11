@@ -2,8 +2,12 @@
 
 #include "mission.h"
 
+#define RETRY_DELAY_SEC 1
+
 extern const double VERTICAL_THRESHOLD;
 extern const double HORIZONTAL_THRESHOLD;
+
+int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t delay);
 
 double getSystemTime();
 
@@ -24,3 +28,5 @@ void getHomeCoord(double& latitude, double& longitude, double& altitude);
 uint32_t getNextCommandIndex();
 
 MissionCommand* getNextCommand();
+
+CommandWaypoint getOldWaypoint();

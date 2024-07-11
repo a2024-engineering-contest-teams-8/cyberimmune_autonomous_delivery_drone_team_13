@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <math.h>
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
 
 #include "../../shared/include/ipc_messages_autopilot_connector.h"
 #include "../../shared/include/ipc_messages_periphery_controller.h"
@@ -11,8 +13,8 @@
 const double STATS_PRINT_DELAY = 1.0;
 const double APM_UPDATE_DELAY = 1.0;
 const double KILL_SWITCH_UPDATE_DURATION = 1.0;
-const double SPEED_UPDATE_DURATION = 0.5;
-const double MOVEMENT_UPDATE_DURATION = 0.5;
+const double SPEED_UPDATE_DURATION = 1.0;
+const double MOVEMENT_UPDATE_DURATION = 1.0;
 const double CARGO_UPDATE_DURATION = 0.2;
 
 const double SPEED_THRESHOLD = 0.5;
@@ -20,7 +22,7 @@ const double COMING_SPEED_THRESHOLD = 0.3;
 const double MAX_COMING_SPEED_THRESHOLD = 1.0;
 const double MAX_HORIZONTAL_SPEED = 2.0;
 const double MAX_VERTICAL_SPEED = 1.0;
-const double MAX_VERTICAL_THRESHOLD = 2.0;
+const double MAX_VERTICAL_THRESHOLD = 3.0;
 
 void printRoutine() {
     static double lastUpdateTime = 0.0;
@@ -161,8 +163,7 @@ void movementRoutine() {
     static double lastUpdateTime = 0.0;
     static double lastPointDistance = 1e10;
     static bool hasDistance = false;
-    static bool movingInWrongDirection = false;
-    static double wrongDirTimer = 0.0;
+    static int wrongCounter = 0;
 
     double time = getSystemTime();
     if (time - lastUpdateTime <= MOVEMENT_UPDATE_DURATION) {
@@ -184,7 +185,7 @@ void movementRoutine() {
     auto waypoint = command->content.waypoint;
     
     double currLat, currLon, currAlt;
-    int result = getCoordsDouble(currLat, currLon, currLat);
+    int result = getCoordsDouble(currLat, currLon, currAlt);
     if (result) {
         fprintf(stderr, "[Error] movementRoutine: Unable to read coords\n");
         return;
@@ -200,28 +201,44 @@ void movementRoutine() {
         (double)waypoint.longitude / 1e7
     );
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
-    double comingSpeedDelta = abs(abs(comingSpeed) - (double)getTargetSpeed());
+    double comingSpeedDelta = (double)getTargetSpeed() - abs(comingSpeed);
     bool isHorizOk = hasDistance && comingSpeedDelta > COMING_SPEED_THRESHOLD;
     isHorizOk = isHorizOk || (pointDistance <  HORIZONTAL_THRESHOLD);
 
-    if (comingSpeedDelta > MAX_COMING_SPEED_THRESHOLD || comingSpeed < 0.0) {
-        setKillSwitch(false);
-        fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled\n");
+    if (hasDistance && (comingSpeed > MAX_COMING_SPEED_THRESHOLD)) {
+        if (++wrongCounter > 1) {
+            setKillSwitch(false);
+            fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
+        }
+    } else {
+        wrongCounter = 0;
     }
 
     if (!isHorizOk) {
         updateSpeed();
         updateWaypoint();
-        fprintf(stderr, "[Info] movementRoutine: moving in wrong horizontal direction\n");
+        fprintf(stderr, "[Info] movementRoutine: moving in wrong horizontal direction. comingSpeed=%f\n", comingSpeed);
     }
     
     lastPointDistance = pointDistance;
     hasDistance = true;
 
+    auto oldWaypoint = getOldWaypoint();
+    
+    double d = getDistanceBetween(
+        (double)waypoint.latitude / 1e7,
+        (double)waypoint.longitude / 1e7,
+        (double)oldWaypoint.latitude / 1e7,
+        (double)oldWaypoint.longitude / 1e7
+    );
+    double h = (pointDistance / d) * (
+        (double)oldWaypoint.altitude - (double)waypoint.altitude
+    ) / 100.0 + (double)waypoint.altitude;
+
     double vertSpeed = getVerticalSpeed();
-    double vertDistance = abs(currAlt - homeAlt - (double)waypoint.altitude / 100.0);
+    double vertDistance = abs(currAlt - homeAlt - h);
     bool isVertOk = (
-        waypoint.altitude > currAlt ?
+        (double)waypoint.altitude / 100.0 > currAlt ?
         vertSpeed >= 0.0 :
         vertSpeed <= 0.0
     );
@@ -229,13 +246,13 @@ void movementRoutine() {
     if (!isVertOk) {
         updateSpeed();
         updateWaypoint();
-        fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction\n");
+        fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
     }
 
-    if (vertDistance > MAX_VERTICAL_THRESHOLD) {
-        setKillSwitch(false);
-        fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled\n");
-    }
+    // if (vertDistance > MAX_VERTICAL_THRESHOLD) {
+    //     setKillSwitch(false);
+    //     fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. vertDistance=%f\n", vertDistance);
+    // }
 }
 
 void cargoRoutine() {

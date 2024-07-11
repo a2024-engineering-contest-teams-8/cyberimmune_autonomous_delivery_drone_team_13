@@ -7,6 +7,7 @@
 #include "../../shared/include/ipc_messages_periphery_controller.h"
 #include "../../shared/include/ipc_messages_server_connector.h"
 #include "../include/controller.h"
+#include "../include/flight_utils.h"
 
 #include <math.h>
 #include <stdio.h>
@@ -14,38 +15,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define RETRY_DELAY_SEC 1
 #define RETRY_REQUEST_DELAY_SEC 5
 #define FLY_ACCEPT_PERIOD_US 500000
 
 extern MissionCommand *commands;
 extern uint32_t commandNum;
-
-int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t delay) {
-    char message[512] = {0};
-    char signature[257] = {0};
-    char request[1024] = {0};
-    snprintf(message, 512, "%s?%s", method, BOARD_ID);
-
-    while (!signMessage(message, signature)) {
-        fprintf(stderr, "[%s] Warning: Failed to sign %s message at Credential Manager. Trying again in %ds\n", ENTITY_NAME, errorMessage, delay);
-        sleep(delay);
-    }
-    snprintf(request, 1024, "%s&sig=0x%s", message, signature);
-
-    while (!sendRequest(request, response)) {
-        fprintf(stderr, "[%s] Warning: Failed to send %s request through Server Connector. Trying again in %ds\n", ENTITY_NAME, errorMessage, delay);
-        sleep(delay);
-    }
-
-    uint8_t authenticity = 0;
-    while (!checkSignature(response, authenticity) || !authenticity) {
-        fprintf(stderr, "[%s] Warning: Failed to check signature of %s response received through Server Connector. Trying again in %ds\n", ENTITY_NAME, errorMessage, delay);
-        sleep(delay);
-    }
-
-    return 1;
-}
 
 double degreeToRadian(double degree){
     return degree * M_PI / 180;
