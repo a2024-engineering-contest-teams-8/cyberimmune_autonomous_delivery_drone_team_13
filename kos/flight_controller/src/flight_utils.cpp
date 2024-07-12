@@ -15,7 +15,7 @@ const double EARTH_RADIUS = 6371000.0;
 const double SPEED_UPDATE_DURATION = 0.2;
 const double COMMAND_UPDATE_DURATION = 0.1;
 
-const double VERTICAL_THRESHOLD = 0.7;
+const double VERTICAL_THRESHOLD = 0.5;
 const double HORIZONTAL_THRESHOLD = 3.0;
 
 double homeLatitude = 0.0;

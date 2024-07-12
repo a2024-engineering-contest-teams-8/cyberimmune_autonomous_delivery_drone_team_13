@@ -115,6 +115,7 @@ void updateWaypoint() {
 
 void armRoutine() {
     static double lastUpdateTime = 0.0;
+    static bool isArmForbidden = false;
 
     double time = getSystemTime();
     if (time - lastUpdateTime <= APM_UPDATE_DELAY) {
@@ -124,13 +125,21 @@ void armRoutine() {
     char armResponse[1024] = {0};
     sendSignedMessage("/api/arm", armResponse, "arm", RETRY_DELAY_SEC);
 
-    if (strstr(armResponse, "$Arm: 1#") != NULL) {
+    if (!isArmForbidden && strstr(armResponse, "$Arm: 1#") != NULL) {
+        isArmForbidden = true;
         fprintf(stderr, "[Info] armRoutine: Arm is forbidden\n");
         if (!forbidArm()) {
             fprintf(stderr, "[Error] armRoutine: Failed to forbid arm through Autopilot Connector\n");
         }
         if (!pauseFlight()) {
             fprintf(stderr, "[Error] armRoutine: Failed to pause flight\n");
+        }
+    } else if (isArmForbidden && strstr(armResponse, "$Arm: 0#") != NULL) {
+        isArmForbidden = false;
+        if (!permitArm())
+            fprintf(stderr, "[Error] armRoutine: Failed to permit arm\n");
+        if (!resumeFlight()) {
+            fprintf(stderr, "[Error] armRoutine: Failed to resume flight\n");
         }
     }
 }
@@ -206,7 +215,7 @@ void movementRoutine() {
         (double)waypoint.longitude / 1e7
     );
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
-    if (!hasWaypointChanged && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 2) {
+    if (!hasWaypointChanged && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 8) {
         setKillSwitch(false);
         fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
     }
@@ -232,15 +241,15 @@ void movementRoutine() {
     double vertSpeed = getVerticalSpeed();
     double vertDistance = abs(currAlt - homeAlt - h);
     bool isVertOk = (
-        (double)waypoint.altitude / 100.0 > currAlt ?
+        (double)waypoint.altitude / 100.0 > (currAlt - homeAlt) ?
         vertSpeed >= 0.0 :
         vertSpeed <= 0.0
     );
     isVertOk = isVertOk || vertDistance < VERTICAL_THRESHOLD;
-    if (!hasWaypointChanged && !isVertOk && getNextCommandIndex() != 3) {
-        updateSpeed();
-        updateWaypoint();
+    if (!hasWaypointChanged && !isVertOk) {
+        changeAltitude(waypoint.altitude);
         fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
+        return;
     }
 
     if (!hasWaypointChanged && vertDistance > MAX_VERTICAL_THRESHOLD && getNextCommandIndex() > 2) {
