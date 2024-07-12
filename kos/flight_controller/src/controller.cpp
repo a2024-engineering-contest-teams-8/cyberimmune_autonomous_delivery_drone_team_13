@@ -44,6 +44,8 @@ void printRoutine() {
     int nextCommandIndex = getNextCommandIndex();
     MissionCommand* nextCommand = getNextCommand();
 
+    char log[1024];
+
     fprintf(stderr, "\n");
     fprintf(stderr, "[Info] latitude: %f deg.\n", lat);
     fprintf(stderr, "[Info] longitude: %f deg.\n", lon);
@@ -122,20 +124,18 @@ void armRoutine() {
         return;
     }
 
-    char armResponse[1024] = {0};
-    sendSignedMessage("/api/arm", armResponse, "arm", RETRY_DELAY_SEC);
-
-    if (!isArmForbidden && strstr(armResponse, "$Arm: 1#") != NULL) {
+    if (!isArmForbidden && !isFlyAccepted()) {
         isArmForbidden = true;
-        fprintf(stderr, "[Info] armRoutine: Arm is forbidden\n");
+        fprintf(stderr, "[Info] armRoutine: Flight paused\n");
         if (!forbidArm()) {
             fprintf(stderr, "[Error] armRoutine: Failed to forbid arm through Autopilot Connector\n");
         }
         if (!pauseFlight()) {
             fprintf(stderr, "[Error] armRoutine: Failed to pause flight\n");
         }
-    } else if (isArmForbidden && strstr(armResponse, "$Arm: 0#") != NULL) {
+    } else if (isArmForbidden && isFlyAccepted()) {
         isArmForbidden = false;
+        fprintf(stderr, "[Info] armRoutine: Flight resumed\n");
         if (!permitArm())
             fprintf(stderr, "[Error] armRoutine: Failed to permit arm\n");
         if (!resumeFlight()) {
@@ -158,12 +158,12 @@ void speedRoutine() {
 
     if (horizSpeed > MAX_HORIZONTAL_SPEED) {
         updateSpeed();
-        fprintf(stderr, "[Info] speedRoutine: horizontal speed limit reached\n");
+        fprintf(stderr, "[Info] speedRoutine: horizontal speed limit reached. speed=%f\n", horizSpeed);
     }
 
     if (vertSpeed > MAX_VERTICAL_SPEED) {
         updateSpeed();
-        fprintf(stderr, "[Info] speedRoutine: vertical speed limit reached\n");
+        fprintf(stderr, "[Info] speedRoutine: vertical speed limit reached. speed=%f\n", vertSpeed);
     }
 }
 
@@ -215,7 +215,7 @@ void movementRoutine() {
         (double)waypoint.longitude / 1e7
     );
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
-    if (!hasWaypointChanged && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 8) {
+    if (!hasWaypointChanged && pointDistance > HORIZONTAL_THRESHOLD && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 8) {
         setKillSwitch(false);
         fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
     }
@@ -235,7 +235,7 @@ void movementRoutine() {
     h /= 100.0;
 
     if (isinf(h) || isnan(h)) {
-        return;
+        h = (double)waypoint.altitude / 100.0;
     }
 
     double vertSpeed = getVerticalSpeed();
@@ -245,7 +245,7 @@ void movementRoutine() {
         vertSpeed >= 0.0 :
         vertSpeed <= 0.0
     );
-    isVertOk = isVertOk || vertDistance < VERTICAL_THRESHOLD;
+    isVertOk = vertDistance < VERTICAL_THRESHOLD;
     if (!hasWaypointChanged && !isVertOk) {
         changeAltitude(waypoint.altitude);
         fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
@@ -270,7 +270,7 @@ void cargoRoutine() {
     auto command = getNextCommand();
     auto servo = command->content.servo;
 
-    if (getNextCommandIndex() >= 9) {
+    if (getNextCommandIndex() >= 8) {
         fprintf(stderr, "[Info] cargoRoutine: received command for cargo drop\n");
         setCargoLock(true);
     } else {

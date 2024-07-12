@@ -9,6 +9,10 @@ extern const double HORIZONTAL_THRESHOLD;
 
 int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t delay);
 
+bool isFlyAccepted();
+
+// void writeLogs(const char* message);
+
 double getSystemTime();
 
 int getCoordsDouble(double& latitude, double& longitude, double& altitude);

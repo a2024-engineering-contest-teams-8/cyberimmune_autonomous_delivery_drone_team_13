@@ -2,6 +2,7 @@
 #include "math.h"
 #include "time.h"
 #include "unistd.h"
+#include <string.h>
 
 #include "../../shared/include/ipc_messages_navigation_system.h"
 #include "../../shared/include/ipc_messages_credential_manager.h"
@@ -48,6 +49,26 @@ int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t 
 
     return 1;
 }
+
+bool isFlyAccepted() {
+    char response[1024] = {0};
+    sendSignedMessage("/api/fly_accept", response, "fly_accept", RETRY_DELAY_SEC);
+
+    return strstr(response, "$Arm: 0#") != NULL;
+}
+
+// void writeLogs(const char* message) {
+//     char response[1024] = {0};
+//     char request[4096] = {0};
+
+//     snprintf("/api/logs?%s&log=%s", 4096, BOARD_ID, message);
+
+//     fprintf(stderr, message);
+
+//     if (!sendRequest(request, response)) {
+//         fprintf(stderr, "[Error] writeLogs: unable to send request to ORVD");
+//     }
+// }
 
 double getSystemTime() {
     auto t = clock();

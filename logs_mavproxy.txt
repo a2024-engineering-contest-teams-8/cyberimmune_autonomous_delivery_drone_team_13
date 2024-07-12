@@ -1,0 +1,1010 @@
+Connect tcp:172.28.0.2:5760 source_system=255
+Log Directory: /home/user
+Telemetry log: /home/user/mav.tlog
+Waiting for heartbeat from tcp:172.28.0.2:5760
+link 1 down
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: Calibrating barometer
+Detected vehicle 1:1 on link 0
+link 1 OK
+online system 1
+STABILIZE> Mode STABILIZE
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: Barometer 1 calibration complete
+AP: Barometer 2 calibration complete
+Init Gyro**Received 1339 parameters (ftp)
+Saved 1339 parameters to /home/user/mav.parm
+Saved 1339 defaults to /home/user/defaults.parm
+
+AP: ArduPilot Ready
+AP: AHRS: DCM active
+AP: RC7: SaveWaypoint LOW
+fence present
+AP: EKF3 IMU0 initialised
+AP: EKF3 IMU1 initialised
+AP: AHRS: EKF3 active
+AP: EKF3 IMU1 tilt alignment complete
+AP: EKF3 IMU0 tilt alignment complete
+AP: EKF3 IMU0 MAG0 initial yaw alignment complete
+AP: EKF3 IMU1 MAG0 initial yaw alignment complete
+AP: GPS 1: detected as u-blox at 230400 baud
+Flight battery 100 percent
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: EKF3 IMU0 origin set
+AP: EKF3 IMU1 origin set
+AP: Field Elevation Set: 78m
+AP: EKF3 IMU1 is using GPS
+AP: EKF3 IMU0 is using GPS
+Flight battery 100 percent
+AP: got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+Got MISSION_ACK: TYPE_MISSION: ACCEPTED
+AP: Flight plan received
+Mission is stale
+Flight battery 100 percent
+Got COMMAND_ACK: COMPONENT_ARM_DISARM: FAILED
+AP: Info: Arm request is sent to KOS
+Got COMMAND_ACK: COMPONENT_ARM_DISARM: FAILED
+AP: Info: Arm request is sent to KOS
+AP: Info: Arm is permitted
+Got COMMAND_ACK: COMPONENT_ARM_DISARM: ACCEPTED
+AP: Info: Arm request is sent to KOS
+AP: Arming motors
+ARMED
+Got MAVLink msg: COMMAND_ACK {command : 11, result : 0, progress : 0, result_param2 : 0, target_system : 252, target_component : 1}
+AUTO> Mode AUTO
+AP: Mission: 1 Takeoff
+waypoint 1
+Got COMMAND_ACK: MISSION_START: ACCEPTED
+AP: Mission: 2 WP
+waypoint 2
+AP: Reached command #2
+AP: Mission: 3 Delay
+AP: Delaying 15 sec
+waypoint 3
+AP: Info: Arm is forbidden
+LAND> Mode LAND
+AP: Info: Request to pause flight
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: SIM Hit ground at 0.487920 m/s
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Disarming motors
+AP: Info: Impossible to change altitude -- no active mission
+waypoint 0
+DISARMED
+AP: KOS Command Message Error: Unknown message head
+Flight battery 90 percent
+AP: Info: Impossible to change altitude -- no active mission
+AP: Info: Impossible to change altitude -- no active mission
+AP: Info: Arm is permitted
+ARMED
+AUTO> Mode AUTO
+AP: Info: Request to resume flight
+AP: Info: Arm request is sent to KOS
+AP: Arming motors
+AP: Mission: 1 Takeoff
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+waypoint 2
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 2 Takeoff
+AP: Mission: 3 Delay
+AP: Delaying 15 sec
+waypoint 3
+AP: Mission: 4 WP
+waypoint 4
+AP: Info: changing altitude to 3 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: EKF3 IMU0 MAG0 in-flight yaw alignment complete
+AP: EKF3 IMU1 MAG0 in-flight yaw alignment complete
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Reached command #4
+AP: Mission: 5 WP
+waypoint 5
+AP: Info: trying to drop cargo at current location
+AP: Info: Lock prevented cargo from dropping
+AP: Mission: 0 SetServo
+AP: Reached command #5
+AP: Mission: 6 WP
+waypoint 6
+AP: Reached command #6
+AP: Mission: 7 WP
+waypoint 7
+AP: Info: changing speed to 5 m/s
+AP: Mission: 0 ChangeSpeed
+Flight battery 80 percent
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: Autopilot failed to parse sent speed
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Reached command #7
+AP: Mission: 8 WP
+waypoint 8
+AP: Reached command #8
+AP: Mission: 9 WP
+waypoint 9
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Reached command #9
+AP: Mission: 10 WP
+AP: Reached command #10
+AP: Info: Cargo is dropped
+AP: Mission: 11 SetServo
+AP: Mission: 12 WP
+AP: Reached command #12
+AP: Mission: 13 WP
+waypoint 13
+AP: Info: changing current waypoint to 466141367, 1428114264, 300
+AP: Mission: 13 WP
+AP: Auto mission changed, restarted command
+AP: Disarming motors
+AP: Mission: 1 Takeoff
+waypoint 1
+AP: Info: Autopilot refuses to change speed
+AP: SIM Hit ground at 6.617869 m/s
+AP: Info: Autopilot refuses to change altitude
+DISARMED
+AP: Info: Autopilot refuses to change speed
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+Unloading module link
+Unloading module log
+Unloading module signing
+Unloading module wp
+Unloading module rally
+Unloading module fence
+Unloading module ftp
+Unloading module param
+Unloading module relay
+Unloading module tuneopt
+Unloading module arm
+Unloading module mode
+Unloading module calibration
+Unloading module rc
+Unloading module auxopt
+Unloading module misc
+Unloading module cmdlong
+Unloading module battery
+Unloading module terrain
+Unloading module output
+Unloading module adsb
+Unloading module layout
+Connect tcp:172.28.0.2:5760 source_system=255
+Log Directory: /home/user
+Telemetry log: /home/user/mav.tlog
+Waiting for heartbeat from tcp:172.28.0.2:5760
+link 1 down
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: Calibrating barometer
+Detected vehicle 1:1 on link 0
+link 1 OK
+online system 1
+STABILIZE> Mode STABILIZE
+Mission is stale
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+AP: ArduCopter V4.4.4 (ff132ae2)
+AP: 6a3781ab6ef844e8b396cac131de31f0
+AP: Frame: QUAD/PLUS
+Got MISSION_ACK: TYPE_MISSION: ERROR
+AP: Barometer 1 calibration complete
+AP: Barometer 2 calibration complete
+Init Gyro**Received 1339 parameters (ftp)
+Saved 1339 parameters to /home/user/mav.parm
+Saved 1339 defaults to /home/user/defaults.parm
+
+AP: ArduPilot Ready
+AP: AHRS: DCM active
+AP: RC7: SaveWaypoint LOW
+fence present
+AP: EKF3 IMU0 initialised
+AP: EKF3 IMU1 initialised
+AP: AHRS: EKF3 active
+AP: EKF3 IMU0 tilt alignment complete
+AP: EKF3 IMU1 tilt alignment complete
+AP: EKF3 IMU0 MAG0 initial yaw alignment complete
+Flight battery 100 percent
+AP: EKF3 IMU1 MAG0 initial yaw alignment complete
+AP: GPS 1: detected as u-blox at 230400 baud
+AP: EKF3 IMU1 origin set
+AP: EKF3 IMU0 origin set
+AP: Field Elevation Set: 78m
+AP: EKF3 IMU1 is using GPS
+AP: EKF3 IMU0 is using GPS
+AP: got MISSION_ITEM; GCS should send MISSION_ITEM_INT
+Got MISSION_ACK: TYPE_MISSION: ACCEPTED
+AP: Flight plan received
+Mission is stale
+Flight battery 100 percent
+Got COMMAND_ACK: COMPONENT_ARM_DISARM: FAILED
+AP: Info: Arm request is sent to KOS
+AP: Info: Arm is permitted
+Got COMMAND_ACK: COMPONENT_ARM_DISARM: ACCEPTED
+AP: Info: Arm request is sent to KOS
+AP: Arming motors
+ARMED
+Got MAVLink msg: COMMAND_ACK {command : 11, result : 0, progress : 0, result_param2 : 0, target_system : 252, target_component : 1}
+AUTO> Mode AUTO
+AP: Mission: 1 Takeoff
+waypoint 1
+Got COMMAND_ACK: MISSION_START: ACCEPTED
+AP: Mission: 2 WP
+waypoint 2
+AP: Reached command #2
+AP: Mission: 3 Delay
+AP: Delaying 15 sec
+waypoint 3
+AP: Mission: 4 WP
+waypoint 4
+Flight battery 90 percent
+AP: Info: changing altitude to 3 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: EKF3 IMU0 MAG0 in-flight yaw alignment complete
+AP: EKF3 IMU1 MAG0 in-flight yaw alignment complete
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 4 WP
+AP: Auto mission changed, restarted command
+AP: Reached command #4
+AP: Mission: 5 WP
+waypoint 5
+AP: Info: trying to drop cargo at current location
+AP: Info: Lock prevented cargo from dropping
+AP: Mission: 0 SetServo
+AP: Reached command #5
+AP: Mission: 6 WP
+waypoint 6
+AP: Reached command #6
+AP: Mission: 7 WP
+waypoint 7
+AP: Info: changing speed to 5 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: changing speed to 2 m/s
+AP: Mission: 0 ChangeSpeed
+AP: Info: Request to change speed
+AP: Info: Autopilot failed to parse sent speed
+AP: KOS Command Message Error: Unknown message head
+AP: Reached command #7
+AP: Mission: 8 WP
+waypoint 8
+AP: Reached command #8
+AP: Mission: 9 WP
+waypoint 9
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+Flight battery 80 percent
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 0 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: Autopilot failed to parse sent altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Info: Request to change altitude
+AP: Info: changing altitude to 2 m
+AP: Mission: 9 WP
+AP: Auto mission changed, restarted command
+AP: Reached command #9
+AP: Mission: 10 WP
+AP: Reached command #10
+AP: Info: Cargo is dropped
+AP: Mission: 11 SetServo
+AP: Mission: 12 WP
+AP: Reached command #12
+AP: Mission: 13 WP
+waypoint 13
+AP: Info: changing current waypoint to 466141367, 1428114264, 300
+AP: Mission: 13 WP
+AP: Auto mission changed, restarted command
+AP: Disarming motors
+AP: Mission: 1 Takeoff
+waypoint 1
+DISARMED
+AP: Info: Autopilot refuses to change speed
+AP: SIM Hit ground at 6.253029 m/s
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change speed
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change speed
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+AP: KOS Command Message Error: Unknown message head
+AP: Info: Autopilot refuses to change altitude
+AP: Info: Autopilot refuses to change altitude
+Unloading module link
+Unloading module log
+Unloading module signing
+Unloading module wp
+Unloading module rally
+Unloading module fence
+Unloading module ftp
+Unloading module param
+Unloading module relay
+Unloading module tuneopt
+Unloading module arm
+Unloading module mode
+Unloading module calibration
+Unloading module rc
+Unloading module auxopt
+Unloading module misc
+Unloading module cmdlong
+Unloading module battery
+Unloading module terrain
+Unloading module output
+Unloading module adsb
+Unloading module layout
