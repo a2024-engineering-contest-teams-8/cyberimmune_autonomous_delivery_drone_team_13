@@ -105,6 +105,7 @@ int main(void) {
     };
 
     setKillSwitch(true);
+    setCargoLock(false);
 
     while (true) {
         updateController();

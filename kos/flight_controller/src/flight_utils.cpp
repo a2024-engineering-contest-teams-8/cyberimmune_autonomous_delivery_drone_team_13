@@ -18,6 +18,7 @@ const double COMMAND_UPDATE_DURATION = 0.1;
 
 const double VERTICAL_THRESHOLD = 0.5;
 const double HORIZONTAL_THRESHOLD = 3.0;
+const double CARGO_DELAY = 2.0;
 
 double homeLatitude = 0.0;
 double homeLongitude = 0.0;
@@ -57,18 +58,17 @@ bool isFlyAccepted() {
     return strstr(response, "$Arm: 0#") != NULL;
 }
 
-// void writeLogs(const char* message) {
-//     char response[1024] = {0};
-//     char request[4096] = {0};
+void sendLogs(const char* message) {
+    char response[1024] = {0};
+    char request[4096] = {0};
 
-//     snprintf("/api/logs?%s&log=%s", 4096, BOARD_ID, message);
+    snprintf(request, 4096, "/api/logs?%s&log=%s", BOARD_ID, message);
 
-//     fprintf(stderr, message);
-
-//     if (!sendRequest(request, response)) {
-//         fprintf(stderr, "[Error] writeLogs: unable to send request to ORVD");
-//     }
-// }
+    // if (!sendRequest(request, response)) {
+    //     return;
+    //     // fprintf(stderr, "[Error] writeLogs: unable to send request to ORVD\n");
+    // }
+}
 
 double getSystemTime() {
     auto t = clock();
@@ -222,7 +222,11 @@ uint32_t getNextCommandIndex() {
                 break;
         }
 
-        lastUpdateTime = time;
+        if (nextIndex < commandNum && commands[nextIndex].type == CommandType::SET_SERVO) {
+            lastUpdateTime = time + CARGO_DELAY - COMMAND_UPDATE_DURATION;
+        } else {
+            lastUpdateTime = time;
+        }
     }
 
     if (nextIndex >= commandNum) {

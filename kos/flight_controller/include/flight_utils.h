@@ -11,7 +11,7 @@ int sendSignedMessage(char* method, char* response, char* errorMessage, uint8_t 
 
 bool isFlyAccepted();
 
-// void writeLogs(const char* message);
+void sendLogs(const char* message);
 
 double getSystemTime();
 
