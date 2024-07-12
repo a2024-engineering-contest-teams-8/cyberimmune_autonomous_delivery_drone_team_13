@@ -325,7 +325,7 @@ void cargoRoutine() {
     auto command = getNextCommand();
     auto servo = command->content.servo;
 
-    if (!cargoLock && getNextCommandIndex() >= 8) {
+    if (!cargoLock && getNextCommandIndex() >= 9) {
         cargoLock = true;
         sendLogs("Cargo+activated");
         fprintf(stderr, "[Info] cargoRoutine: received command for cargo drop\n");
