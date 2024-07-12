@@ -74,7 +74,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp: %2d, HOME, h: %1f.2, alt: %1f.2, v_speed: %2f.2, h_speed: %2f.2",
+                "wp%%3A+%02d,+HOME,+h%%3A+%01f.2,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
                 nextCommandIndex,
                 alt - homeAlt,
                 vertSpeed,
@@ -86,7 +86,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp: %2d, TAKEOFF, h: %1f.2, alt: %1f.2, v_speed: %2f.2, h_speed: %2f.2",
+                "wp%%3A+%02d,+TAKEOFF,+h%%3A+%01f.2,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
                 nextCommandIndex,
                 (double)nextCommand->content.takeoff.altitude / 100.0,
                 alt - homeAlt,
@@ -101,7 +101,7 @@ void printRoutine() {
             double d = getDistanceBetween(lat, lon, targetLat, targetLon);
             fprintf(
                 stderr,
-                "WAYPOINT lat %f deg, long %f deg, alt %f m., dist: %f m.",
+                "WAYPOINT lat %f deg, long %f deg, alt %f m., dist: %f m.\n",
                 targetLat,
                 targetLon,
                 (double)waypoint.altitude / 100.0,
@@ -110,7 +110,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp: %2d, WAYPOINT, d: %1f.3, alt: %1f.2, v_speed: %2f.2, h_speed: %2f.2",
+                "wp%%3A+%02d,+WAYPOINT,+d%%3A+%01f.3,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
                 nextCommandIndex,
                 d,
                 alt - homeAlt,
@@ -124,7 +124,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp: %2d, LAND, alt: %1f.2, v_speed: %2f.2, h_speed: %2f.2",
+                "wp%%3A+%02d,+LAND,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
                 nextCommandIndex,
                 alt - homeAlt,
                 vertSpeed,
@@ -137,7 +137,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp: %2d, SET_SERVO, alt: %1f.2, v_speed: %2f.2, h_speed: %2f.2",
+                "wp%%3A+%02d,+SET_SERVO,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
                 nextCommandIndex,
                 alt - homeAlt,
                 vertSpeed,
@@ -174,7 +174,7 @@ void armRoutine() {
 
     if (!isArmForbidden && !isFlyAccepted()) {
         isArmForbidden = true;
-        sendLogs("Flight paused");
+        sendLogs("Flight+paused");
         fprintf(stderr, "[Info] armRoutine: Flight paused\n");
         if (!forbidArm()) {
             fprintf(stderr, "[Error] armRoutine: Failed to forbid arm through Autopilot Connector\n");
@@ -184,7 +184,7 @@ void armRoutine() {
         }
     } else if (isArmForbidden && isFlyAccepted()) {
         isArmForbidden = false;
-        sendLogs("Flight resumed");
+        sendLogs("Flight+resumed");
         fprintf(stderr, "[Info] armRoutine: Flight resumed\n");
         if (!permitArm())
             fprintf(stderr, "[Error] armRoutine: Failed to permit arm\n");
@@ -208,13 +208,13 @@ void speedRoutine() {
 
     if (horizSpeed > MAX_HORIZONTAL_SPEED) {
         updateSpeed();
-        sendLogs("Horiz. speed limit reached");
+        sendLogs("Horiz.+speed+limit+reached");
         fprintf(stderr, "[Info] speedRoutine: horizontal speed limit reached. speed=%f\n", horizSpeed);
     }
 
     if (vertSpeed > MAX_VERTICAL_SPEED) {
         updateSpeed();
-        sendLogs("Vert. speed limit reached");
+        sendLogs("Vert.speed+limit+reached");
         fprintf(stderr, "[Info] speedRoutine: vertical speed limit reached. speed=%f\n", vertSpeed);
     }
 }
@@ -269,7 +269,7 @@ void movementRoutine() {
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
     if (!hasWaypointChanged && pointDistance > HORIZONTAL_THRESHOLD && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 9) {
         setKillSwitch(false);
-        sendLogs("Kill switch activated");
+        sendLogs("Kill+switch+activated");
         fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
     }
     
@@ -291,11 +291,6 @@ void movementRoutine() {
         h = (double)waypoint.altitude / 100.0;
     }
 
-    if (getNextCommandIndex() >= 8 && hasWaypointChanged) {
-        changeAltitude(waypoint.altitude);
-        return;
-    }
-
     double vertSpeed = getVerticalSpeed();
     double vertDistance = abs(currAlt - homeAlt - h);
     bool isVertOk = (
@@ -304,9 +299,9 @@ void movementRoutine() {
         vertSpeed <= 0.0
     );
     isVertOk = vertDistance < VERTICAL_THRESHOLD;
-    if (!hasWaypointChanged && vertDistance > VERTICAL_THRESHOLD && getNextCommandIndex() < 8) {
+    if (!hasWaypointChanged && vertDistance > VERTICAL_THRESHOLD) {
         changeAltitude(waypoint.altitude);
-        sendLogs("Moving in invalid vertical direction");
+        sendLogs("Moving+in+invalid+vertical+direction");
         fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
         return;
     }
@@ -332,7 +327,7 @@ void cargoRoutine() {
 
     if (!cargoLock && getNextCommandIndex() >= 8) {
         cargoLock = true;
-        sendLogs("Cargo activated");
+        sendLogs("Cargo+activated");
         fprintf(stderr, "[Info] cargoRoutine: received command for cargo drop\n");
         setCargoLock(true);
     } else if (cargoLock && getNextCommandIndex() < 8) {

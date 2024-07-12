@@ -64,10 +64,10 @@ void sendLogs(const char* message) {
 
     snprintf(request, 4096, "/api/logs?%s&log=%s", BOARD_ID, message);
 
-    // if (!sendRequest(request, response)) {
-    //     return;
-    //     // fprintf(stderr, "[Error] writeLogs: unable to send request to ORVD\n");
-    // }
+    if (!sendRequest(request, response)) {
+        return;
+        // fprintf(stderr, "[Error] writeLogs: unable to send request to ORVD\n");
+    }
 }
 
 double getSystemTime() {
