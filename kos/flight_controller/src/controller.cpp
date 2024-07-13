@@ -17,7 +17,7 @@ const double SPEED_UPDATE_DURATION = 0.1;
 const double MOVEMENT_UPDATE_DURATION = 0.1;
 const double CARGO_UPDATE_DURATION = 0.2;
 
-const double MAX_COMING_SPEED_THRESHOLD = 0.4;
+const double MAX_COMING_SPEED_THRESHOLD = 1.0;
 const double MAX_HORIZONTAL_SPEED = 2.5;
 const double MAX_VERTICAL_SPEED = 2.0;
 const double MAX_VERTICAL_THRESHOLD = 2.0;
@@ -240,6 +240,7 @@ void movementRoutine() {
         return;
     }
 
+    auto oldWaypoint = getOldWaypoint();
     auto waypoint = command->content.waypoint;
     
     double currLat, currLon, currAlt;
@@ -258,8 +259,19 @@ void movementRoutine() {
         (double)waypoint.latitude / 1e7,
         (double)waypoint.longitude / 1e7
     );
+    auto oldPointDistance = getDistanceBetween(
+        currLat,
+        currLon,
+        (double)oldWaypoint.latitude / 1e7,
+        (double)oldWaypoint.longitude / 1e7
+    );
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
-    if (pointDistance > HORIZONTAL_THRESHOLD && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 9) {
+    if (
+        !hasWaypointChanged() &&
+        pointDistance > HORIZONTAL_THRESHOLD &&
+        comingSpeed > MAX_COMING_SPEED_THRESHOLD &&
+        getNextCommandIndex() > 10
+    ) {
         setKillSwitch(false);
         sendLogs("Kill+switch+activated");
         fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
@@ -267,7 +279,6 @@ void movementRoutine() {
     
     lastPointDistance = pointDistance;
 
-    auto oldWaypoint = getOldWaypoint();
     double d = getDistanceBetween(
         (double)waypoint.latitude / 1e7,
         (double)waypoint.longitude / 1e7,

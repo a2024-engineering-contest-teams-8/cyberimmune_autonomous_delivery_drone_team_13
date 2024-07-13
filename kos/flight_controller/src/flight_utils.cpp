@@ -17,7 +17,7 @@ const double SPEED_UPDATE_DURATION = 0.2;
 const double COMMAND_UPDATE_DURATION = 0.1;
 
 const double VERTICAL_THRESHOLD = 1.0;
-const double HORIZONTAL_THRESHOLD = 3.0;
+const double HORIZONTAL_THRESHOLD = 5.0;
 const double CARGO_DELAY = 2.0;
 
 double homeLatitude = 0.0;
@@ -211,10 +211,10 @@ uint32_t getNextCommandIndex() {
                     (double)waypoint.longitude / 1e7
                 );
                 double h = abs(currAlt - homeAltitude - (double)waypoint.altitude / 100.0);
-                if (d < HORIZONTAL_THRESHOLD && h < VERTICAL_THRESHOLD) {
+                if (d < HORIZONTAL_THRESHOLD) {
                     oldWaypoint = waypoint;
                     ++nextIndex;
-                } else if (nextIndex >= 6 && nextIndex <= 8) {
+                } else if (nextIndex >= 5 && nextIndex <= 7) {
                     ++nextIndex;
                 }
                 break;
