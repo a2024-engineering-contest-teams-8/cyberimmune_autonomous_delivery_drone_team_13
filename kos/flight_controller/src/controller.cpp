@@ -210,6 +210,10 @@ void speedRoutine() {
     }
     lastUpdateTime = time;
 
+    if (getNextCommandIndex() < 5) {
+        return;
+    }
+
     if (horizSpeed > MAX_HORIZONTAL_SPEED || (hasWaypointChanged() && getNextCommandIndex() == 8)) {
         updateSpeed();
         sendLogs("Horiz.+speed+limit+reached");
@@ -221,6 +225,7 @@ void movementRoutine() {
     static double lastUpdateTime = 0.0;
     static double lastPointDistance = 1e10;
     static double takeoffTime = 0.0;
+    static int oldIndex = -1;
 
     double time = getSystemTime();
     if (time - lastUpdateTime <= MOVEMENT_UPDATE_DURATION) {
@@ -267,7 +272,7 @@ void movementRoutine() {
     );
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
     if (
-        !hasWaypointChanged() &&
+        oldIndex == getNextCommandIndex() &&
         pointDistance > HORIZONTAL_THRESHOLD &&
         comingSpeed > MAX_COMING_SPEED_THRESHOLD &&
         getNextCommandIndex() > 10
@@ -277,6 +282,7 @@ void movementRoutine() {
         fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
     }
     
+    oldIndex = getNextCommandIndex();
     lastPointDistance = pointDistance;
 
     double d = getDistanceBetween(
@@ -295,8 +301,8 @@ void movementRoutine() {
     }
 
     double vertSpeed = getVerticalSpeed();
-    double vertDistance = abs(currAlt - homeAlt - h);
-    if (vertDistance > 0.5) {
+    double vertDistance = abs(currAlt - homeAlt - (double)waypoint.altitude / 100.0);
+    if (vertDistance > 0.2) {
         changeAltitude(waypoint.altitude);
         sendLogs("Moving+in+invalid+vertical+direction");
         fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
@@ -316,12 +322,20 @@ void cargoRoutine() {
     auto command = getNextCommand();
     auto servo = command->content.servo;
 
-    if (!cargoLock && getNextCommandIndex() >= 9) {
+    const double targetLat = 46.61443690;
+    const double targetLon = 142.81158510;
+
+    double dist;
+    getDistanceTo(targetLat, targetLon, dist);
+    
+    bool b = dist < 5.0;
+
+    if (!cargoLock && b) {
         cargoLock = true;
         sendLogs("Cargo+activated");
         fprintf(stderr, "[Info] cargoRoutine: received command for cargo drop\n");
         setCargoLock(true);
-    } else if (cargoLock && getNextCommandIndex() < 8) {
+    } else if (cargoLock && !b) {
         cargoLock = false;
         setCargoLock(false);
     }
