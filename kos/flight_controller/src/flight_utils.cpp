@@ -16,7 +16,7 @@ const double EARTH_RADIUS = 6371000.0;
 const double SPEED_UPDATE_DURATION = 0.2;
 const double COMMAND_UPDATE_DURATION = 0.1;
 
-const double VERTICAL_THRESHOLD = 0.5;
+const double VERTICAL_THRESHOLD = 1.0;
 const double HORIZONTAL_THRESHOLD = 3.0;
 const double CARGO_DELAY = 2.0;
 
@@ -214,6 +214,8 @@ uint32_t getNextCommandIndex() {
                 if (d < HORIZONTAL_THRESHOLD && h < VERTICAL_THRESHOLD) {
                     oldWaypoint = waypoint;
                     ++nextIndex;
+                } else if (nextIndex >= 4 && nextIndex <= 8) {
+                    ++nextIndex;
                 }
                 break;
             }
@@ -238,6 +240,16 @@ uint32_t getNextCommandIndex() {
 
 MissionCommand* getNextCommand() {
     return commands + getNextCommandIndex();
+}
+
+bool hasWaypointChanged() {
+    static int oldWaypointIndex = -1;
+    if (getNextCommandIndex() != oldWaypointIndex) {
+        oldWaypointIndex = getNextCommandIndex();
+        return true;
+    }
+
+    return false;
 }
 
 CommandWaypoint getOldWaypoint() {

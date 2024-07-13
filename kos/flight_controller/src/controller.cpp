@@ -17,9 +17,8 @@ const double SPEED_UPDATE_DURATION = 0.1;
 const double MOVEMENT_UPDATE_DURATION = 0.1;
 const double CARGO_UPDATE_DURATION = 0.2;
 
-const double COMING_SPEED_THRESHOLD = 1.5;
 const double MAX_COMING_SPEED_THRESHOLD = 0.5;
-const double MAX_HORIZONTAL_SPEED = 3.0;
+const double MAX_HORIZONTAL_SPEED = 2.0;
 const double MAX_VERTICAL_SPEED = 2.0;
 const double MAX_VERTICAL_THRESHOLD = 2.0;
 
@@ -74,7 +73,8 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp%%3A+%02d,+HOME,+h%%3A+%01f.2,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
+                "time%%3A+%.2f,wp%%3A+%02d,+HOME,+h%%3A+%.2f,+alt%%3A+%.2f,+v_speed%%3A+%.2f,+h_speed%%3A+%.2f",
+                time,
                 nextCommandIndex,
                 alt - homeAlt,
                 vertSpeed,
@@ -86,7 +86,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp%%3A+%02d,+TAKEOFF,+h%%3A+%01f.2,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
+                "time%%3A+%.2f,wp%%3A+%02d,+TAKEOFF,+h%%3A+%.2f,+alt%%3A+%.2f,+v_speed%%3A+%.2f,+h_speed%%3A+%.2f",
                 nextCommandIndex,
                 (double)nextCommand->content.takeoff.altitude / 100.0,
                 alt - homeAlt,
@@ -110,7 +110,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp%%3A+%02d,+WAYPOINT,+d%%3A+%01f.3,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
+                "time%%3A+%.2f,wp%%3A+%02d,+WAYPOINT,+d%%3A+%.3f,+alt%%3A+%.2f,+v_speed%%3A+%.2f,+h_speed%%3A+%.2f",
                 nextCommandIndex,
                 d,
                 alt - homeAlt,
@@ -124,7 +124,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp%%3A+%02d,+LAND,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
+                "time%%3A+%.2f,wp%%3A+%02d,+LAND,+alt%%3A+%.2f,+v_speed%%3A+%.2f,+h_speed%%3A+%0.2f",
                 nextCommandIndex,
                 alt - homeAlt,
                 vertSpeed,
@@ -137,7 +137,7 @@ void printRoutine() {
             snprintf(
                 log,
                 4096,
-                "wp%%3A+%02d,+SET_SERVO,+alt%%3A+%01f.2,+v_speed%%3A+%02f.2,+h_speed%%3A+%02f.2",
+                "time%%3A+%.2f,wp%%3A+%02d,+SET_SERVO,+alt%%3A+%.2f,+v_speed%%3A+%.2f,+h_speed%%3A+%.2f",
                 nextCommandIndex,
                 alt - homeAlt,
                 vertSpeed,
@@ -211,19 +211,12 @@ void speedRoutine() {
         sendLogs("Horiz.+speed+limit+reached");
         fprintf(stderr, "[Info] speedRoutine: horizontal speed limit reached. speed=%f\n", horizSpeed);
     }
-
-    if (vertSpeed > MAX_VERTICAL_SPEED) {
-        updateSpeed();
-        sendLogs("Vert.speed+limit+reached");
-        fprintf(stderr, "[Info] speedRoutine: vertical speed limit reached. speed=%f\n", vertSpeed);
-    }
 }
 
 void movementRoutine() {
     static double lastUpdateTime = 0.0;
     static double lastPointDistance = 1e10;
     static double takeoffTime = 0.0;
-    static int oldWaypointIndex = -1;
 
     double time = getSystemTime();
     if (time - lastUpdateTime <= MOVEMENT_UPDATE_DURATION) {
@@ -233,11 +226,6 @@ void movementRoutine() {
     lastUpdateTime = time;
 
     auto command = getNextCommand();
-    bool hasWaypointChanged = false;
-    if (getNextCommandIndex() != oldWaypointIndex) {
-        oldWaypointIndex = getNextCommandIndex();
-        hasWaypointChanged = true;
-    }
     
     if (command->type == CommandType::LAND || getNextCommandIndex() == commandNum - 1) {
         pauseFlight();
@@ -267,7 +255,7 @@ void movementRoutine() {
         (double)waypoint.longitude / 1e7
     );
     double comingSpeed = (pointDistance - lastPointDistance) / deltaTime;
-    if (!hasWaypointChanged && pointDistance > HORIZONTAL_THRESHOLD && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 9) {
+    if (pointDistance > HORIZONTAL_THRESHOLD && comingSpeed > MAX_COMING_SPEED_THRESHOLD && getNextCommandIndex() > 9) {
         setKillSwitch(false);
         sendLogs("Kill+switch+activated");
         fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. comingSpeed=%f\n", comingSpeed);
@@ -293,22 +281,10 @@ void movementRoutine() {
 
     double vertSpeed = getVerticalSpeed();
     double vertDistance = abs(currAlt - homeAlt - h);
-    bool isVertOk = (
-        (double)waypoint.altitude / 100.0 > (currAlt - homeAlt) ?
-        vertSpeed >= 0.0 :
-        vertSpeed <= 0.0
-    );
-    isVertOk = vertDistance < VERTICAL_THRESHOLD;
-    if (!hasWaypointChanged && vertDistance > VERTICAL_THRESHOLD) {
+    if (vertDistance > 0.4) {
         changeAltitude(waypoint.altitude);
         sendLogs("Moving+in+invalid+vertical+direction");
         fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
-        return;
-    }
-
-    if (!hasWaypointChanged && vertDistance > MAX_VERTICAL_THRESHOLD && getNextCommandIndex() > 2) {
-        setKillSwitch(false);
-        fprintf(stderr, "[Info] movementRoutine: mission was changed, kill switch was enabled. vertDistance=%f\n", vertDistance);
     }
 }
 

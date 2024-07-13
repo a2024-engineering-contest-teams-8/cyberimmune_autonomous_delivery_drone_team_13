@@ -33,4 +33,6 @@ uint32_t getNextCommandIndex();
 
 MissionCommand* getNextCommand();
 
+bool hasWaypointChanged();
+
 CommandWaypoint getOldWaypoint();
