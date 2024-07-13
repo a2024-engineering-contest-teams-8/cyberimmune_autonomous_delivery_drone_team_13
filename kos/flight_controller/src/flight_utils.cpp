@@ -214,7 +214,7 @@ uint32_t getNextCommandIndex() {
                 if (d < HORIZONTAL_THRESHOLD && h < VERTICAL_THRESHOLD) {
                     oldWaypoint = waypoint;
                     ++nextIndex;
-                } else if (nextIndex >= 4 && nextIndex <= 8) {
+                } else if (nextIndex >= 6 && nextIndex <= 8) {
                     ++nextIndex;
                 }
                 break;

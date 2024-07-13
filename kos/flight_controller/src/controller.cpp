@@ -17,8 +17,8 @@ const double SPEED_UPDATE_DURATION = 0.1;
 const double MOVEMENT_UPDATE_DURATION = 0.1;
 const double CARGO_UPDATE_DURATION = 0.2;
 
-const double MAX_COMING_SPEED_THRESHOLD = 0.5;
-const double MAX_HORIZONTAL_SPEED = 2.0;
+const double MAX_COMING_SPEED_THRESHOLD = 0.4;
+const double MAX_HORIZONTAL_SPEED = 2.5;
 const double MAX_VERTICAL_SPEED = 2.0;
 const double MAX_VERTICAL_THRESHOLD = 2.0;
 
@@ -285,7 +285,7 @@ void movementRoutine() {
 
     double vertSpeed = getVerticalSpeed();
     double vertDistance = abs(currAlt - homeAlt - h);
-    if (vertDistance > 0.4) {
+    if (vertDistance > 0.5) {
         changeAltitude(waypoint.altitude);
         sendLogs("Moving+in+invalid+vertical+direction");
         fprintf(stderr, "[Info] movementRoutine: moving in wrong vertical direction. vertSpeed=%f\n", vertSpeed);
