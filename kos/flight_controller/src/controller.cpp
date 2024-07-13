@@ -17,7 +17,7 @@ const double SPEED_UPDATE_DURATION = 0.1;
 const double MOVEMENT_UPDATE_DURATION = 0.1;
 const double CARGO_UPDATE_DURATION = 0.2;
 
-const double MAX_COMING_SPEED_THRESHOLD = 1.0;
+const double MAX_COMING_SPEED_THRESHOLD = 0.5;
 const double MAX_HORIZONTAL_SPEED = 2.5;
 const double MAX_VERTICAL_SPEED = 2.0;
 const double MAX_VERTICAL_THRESHOLD = 2.0;
@@ -210,7 +210,7 @@ void speedRoutine() {
     }
     lastUpdateTime = time;
 
-    if (horizSpeed > MAX_HORIZONTAL_SPEED) {
+    if (horizSpeed > MAX_HORIZONTAL_SPEED || (hasWaypointChanged() && getNextCommandIndex() == 8)) {
         updateSpeed();
         sendLogs("Horiz.+speed+limit+reached");
         fprintf(stderr, "[Info] speedRoutine: horizontal speed limit reached. speed=%f\n", horizSpeed);

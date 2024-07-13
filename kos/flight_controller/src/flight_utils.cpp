@@ -16,7 +16,7 @@ const double EARTH_RADIUS = 6371000.0;
 const double SPEED_UPDATE_DURATION = 0.2;
 const double COMMAND_UPDATE_DURATION = 0.1;
 
-const double VERTICAL_THRESHOLD = 1.0;
+const double VERTICAL_THRESHOLD = 5.0;
 const double HORIZONTAL_THRESHOLD = 5.0;
 const double CARGO_DELAY = 2.0;
 
@@ -214,7 +214,7 @@ uint32_t getNextCommandIndex() {
                 if (d < HORIZONTAL_THRESHOLD) {
                     oldWaypoint = waypoint;
                     ++nextIndex;
-                } else if (nextIndex >= 5 && nextIndex <= 7) {
+                } else if (nextIndex >= 5 && nextIndex <= 8) {
                     ++nextIndex;
                 }
                 break;
